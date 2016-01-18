@@ -79,14 +79,17 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: <<-SHELL
 
     echo '-----------------------------------------------------------------------------------------------'
-    echo ---- UPDATING THE SYSTEM
+    echo '---- UPDATING THE SYSTEM'
     echo '-----------------------------------------------------------------------------------------------'
-    apt-get update
-    # uncomment next line after you have this script working well
-    # apt-get upgrade
+
+    echo 'Starting shell script at:'
     date
     whoami
     pwd
+
+    apt-get update
+    # uncomment next line after you have this script working well
+    # apt-get upgrade
 
     echo '---- SETTING HOST NAME'
     hostnamectl set-hostname csserver
@@ -95,6 +98,10 @@ Vagrant.configure(2) do |config|
 
     echo '---- INSTALLING UTILITY PROGRAMS'
     apt-get install -y git bzip2 zip unzip screen
+    echo '--'
+
+    echo '---- SETTING PASSWORD FOR USER vagrant TO mucis'
+    echo vagrant:mucis | sudo chpasswd
     echo '--'
 
 
@@ -167,9 +174,9 @@ Vagrant.configure(2) do |config|
 #    echo '--'
 
 
-    echo '-----------------------------------------------------------------------------------------------'
-    echo '---- INSTALLING APACHE2, MYSQL, AND TOMCAT SERVERS'
-    echo '-----------------------------------------------------------------------------------------------'
+#    echo '-----------------------------------------------------------------------------------------------'
+#    echo '---- INSTALLING APACHE2, MYSQL, AND TOMCAT SERVERS'
+#    echo '-----------------------------------------------------------------------------------------------'
     
 #    apt-get install -y apache2
 #    echo '--'
@@ -188,9 +195,9 @@ Vagrant.configure(2) do |config|
 #    echo '--'
 
 
-    echo '-----------------------------------------------------------------------------------------------'
-    echo '---- CONFIGURE APACHE2 AND TOMCAT WORKSPACES'
-    echo '-----------------------------------------------------------------------------------------------'
+#    echo '-----------------------------------------------------------------------------------------------'
+#    echo '---- CONFIGURE APACHE2 AND TOMCAT WORKSPACES'
+#    echo '-----------------------------------------------------------------------------------------------'
     
 #    echo '---- SET DEFAULT APACHE2 WEB DIRECTORY TO /vagrant/html'
 #    echo '---- VIEW WEB PROGRAMS IN BROWSER AT localhost:8000'
@@ -210,9 +217,11 @@ Vagrant.configure(2) do |config|
 #    echo '--'
 
 
-    echo '-----------------------------------------------------------------------------------------------'
-    echo 'INSTALL GUI ENVIRONMENT'
-    echo '-----------------------------------------------------------------------------------------------'
+#    echo '-----------------------------------------------------------------------------------------------'
+#    echo '---- INSTALLING GUI ENVIRONMENT'
+#    echo '---- BRING UP GUI ENVIRONMENT USING: vagrant rdp'
+#    echo '---- OR LAUNCH SEPARATE REMOTE DESKTOP FROM WINDOWS OR OS X USING: localhost:7000'
+#    echo '-----------------------------------------------------------------------------------------------'
 
 #    echo '---- INSTALLING REMOTE DESKTOP AND MATE GUI'
 #    apt-get install -y xrdp
@@ -228,36 +237,32 @@ Vagrant.configure(2) do |config|
 #    rm -f google-chrome-stable_current_amd64.deb
 #    echo '--'
 
-    echo '---- SETTING PASSWORD FOR USER vagrant TO mucis'
-    echo '---- BRING UP GUI ENVIRONMENT USING: vagrant rdp'
-    echo '---- OR LAUNCH SEPARATE REMOTE DESKTOP FROM WINDOWS OR OS X USING: localhost:7000'
-    echo vagrant:mucis | sudo chpasswd
-    echo '--'
-
 #    echo '---- INSTALLING PYTHON3 TK GRAPHICS LIBRARY'
 #    apt-get install -y python3-tk
 #    echo '--'
 
 
-    echo '-----------------------------------------------------------------------------------------------'
-    echo 'INSTALL GUI IDEs'
-    echo '-----------------------------------------------------------------------------------------------'
+#    echo '-----------------------------------------------------------------------------------------------'
+#    echo '---- INSTALLING GUI IDEs'
+#    echo '-----------------------------------------------------------------------------------------------'
 
 #    echo '---- INSTALLING C, C++, C# Mono IDE'
 #    apt-get install -y monodevelop
 #    echo '--'
 
-#    echo '---- SPRING STS / ECLIPSE IDE'
+#    echo '---- INSTALLING SPRING STS / ECLIPSE IDE'
 #    wget http://dist.springsource.com/release/STS/3.7.2.RELEASE/dist/e4.5/spring-tool-suite-3.7.2.RELEASE-e4.5.1-linux-gtk-x86_64.tar.gz
 #    tar xvzf spring-tool-suite-3.7.2.RELEASE-e4.5.1-linux-gtk-x86_64.tar.gz
 #    rm -f spring-tool-suite-3.7.2.RELEASE-e4.5.1-linux-gtk-x86_64.tar.gz
 #    echo 'RUN AS: ~/sts-bundle/sts-3.7.2.RELEASE/STS'
 #    echo '--'
 
-#    echo '---- NETBEANS IDE (as of 20160118 installling older version 8.0.2)'
+#    echo '---- INSTALLING NETBEANS IDE (as of 20160118 installling older version 8.0.2)'
 #    apt-get install -y netbeans
 #    echo '--'
 
+    echo 'Ending shell script at:'
+    date
 
     echo '-----------------------------------------------------------------------------------------------'
     echo '---- AFTER FIRST vagrant up BE SURE TO vagrant halt AND THEN vagrant up AGAIN TO FINISH INSTALL'
